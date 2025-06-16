@@ -1,0 +1,10 @@
+# Ignore compiled binaries
+*.exe
+*.out
+*.o
+
+# Ignore OS or IDE files
+.DS_Store
+*.log
+
+.vscode/
