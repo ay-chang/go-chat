@@ -12,7 +12,7 @@ This is a basic but functional chat app that allows multiple clients to connect 
 - Basic terminal client that can send and receive messages
 - Graceful client disconnection handling
 
-Foundational coding techniques used:
+## Foundational coding techniques used:
 
 ### ⚙️ TCP Networking in Go
 
