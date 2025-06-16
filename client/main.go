@@ -36,11 +36,11 @@ func main() {
 	}
 }
 
+/**
+ * Continuously listen for incoming messages from the server connection
+ * and print each message to the terminal as it's received.
+ */
 func receiveMessages(conn net.Conn) {
-	/**
-	 * Continuously listen for incoming messages from the server connection
-	 * and print each message to the terminal as it's received.
-	 */
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
