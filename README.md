@@ -4,8 +4,6 @@ A simple terminal-based chat application written in Go — built as a learning p
 
 This is a basic but functional chat app that allows multiple clients to connect to a server, send messages, and receive messages from others in real time. Over time, I plan to add new features like nicknames, private messaging, command parsing, and more.
 
----
-
 ## ✨ Features (Current)
 
 - Multi-client TCP server using the `net` package
@@ -13,8 +11,6 @@ This is a basic but functional chat app that allows multiple clients to connect 
 - Real-time message broadcasting using Go channels
 - Basic terminal client that can send and receive messages
 - Graceful client disconnection handling
-
----
 
 Foundational coding techniques used:
 
@@ -37,8 +33,6 @@ Foundational coding techniques used:
 
 - Using `sync.Mutex` to prevent race conditions when accessing shared resources (like the clients map)
 
----
-
 ## 🚀 Planned Features
 
 - Nicknames and user identification
@@ -46,8 +40,6 @@ Foundational coding techniques used:
 - Colored terminal output per user
 - Chat history logging
 - Hosting on a public server
-
----
 
 ## 🛠️ How to Run Locally
 
@@ -64,9 +56,3 @@ go run main.go
 cd client
 go run main.go
 ```
-
-## 📦 Project Structure
-
-.
-├── server.go # TCP server: accepts clients, reads messages, broadcasts to all
-└── client.go # CLI client: sends messages and prints incoming messages
