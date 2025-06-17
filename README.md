@@ -46,8 +46,9 @@ This is a basic but functional chat app that allows multiple clients to connect 
 ### Server
 
 ```bash
+go mod init go-chat-app
 cd server
-go run main.go
+go run .
 ```
 
 ### Client (in another terminal)
