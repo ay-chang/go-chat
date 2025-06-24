@@ -8,6 +8,7 @@ import (
 
 var (
 	clients   = make(map[net.Conn]string) // all connected clients
+	users     = make(map[string]net.Conn) // reverse hashmap of clients
 	broadcast = make(chan string)         // channel to broadcast messages
 	mu        sync.Mutex                  // protects the clients map
 )

@@ -8,19 +8,28 @@ import (
 
 /** Listens for messages from a client and forwards to the broadcast channel. */
 func handleClient(conn net.Conn) {
+	var username string
+
 	defer func() {
 		mu.Lock()
 		delete(clients, conn)
+		delete(users, username)
 		mu.Unlock()
 		conn.Close()
 		fmt.Println("Client disconnected:", conn.RemoteAddr())
 	}()
 
-	/** First get the client username and add new client to clients map */
+	/**
+	 * First get the client username and add new client username to clients map and also
+	 * add the client to the user map
+	 */
 	scanner := bufio.NewScanner(conn)
 	if scanner.Scan() {
+		username = scanner.Text()
+
 		mu.Lock()
-		clients[conn] = scanner.Text()
+		clients[conn] = username
+		users[username] = conn
 		mu.Unlock()
 	}
 
@@ -38,7 +47,7 @@ func handleClient(conn net.Conn) {
 	}
 }
 
-/** Waits for messages and then broadcasts them to every client. */
+/** Waits for messages from handleClient and then broadcasts them to every client. */
 func handleBroadcast() {
 	for msg := range broadcast {
 		mu.Lock()

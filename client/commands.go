@@ -28,7 +28,11 @@ func handleCommand(input string) bool {
 }
 
 func printHelp() {
-	fmt.Println("Help section:")
+	fmt.Println("Available commands:")
+	fmt.Println("  /help                 Show this message")
+	fmt.Println("  /quit                 Exit the chat")
+	fmt.Println("  /name <username>      Change your nickname")
+	fmt.Println("  /msg @user <message>  Send a private message")
 }
 
 func messagePrivately(parts []string) {

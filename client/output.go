@@ -28,3 +28,5 @@ func receiveMessages(conn net.Conn) {
 	fmt.Println("Disconnected from server.")
 	os.Exit(0) // stop the whole program
 }
+
+/** Receive private messages */
