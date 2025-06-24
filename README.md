@@ -14,26 +14,26 @@ This is a basic but functional chat app that allows multiple clients to connect 
 
 ## Foundational coding techniques used:
 
-### ⚙️ TCP Networking in Go
+### TCP Networking in Go
 
 - Using `net.Listen()` and `net.Dial()` to set up client-server communication
 - Managing TCP connections as byte streams
 
-### 🧵 Goroutines and Concurrency
+### Goroutines and Concurrency
 
 - Handling multiple clients at once without blocking
 - Running background listeners (e.g. receive messages while typing)
 
-### 🔁 Channels and Message Broadcasting
+### Channels and Message Broadcasting
 
 - Centralizing messages from all clients into a broadcast loop
 - Distributing messages out to all connected clients safely
 
-### 🔐 Safe Shared State
+### Safe Shared State
 
 - Using `sync.Mutex` to prevent race conditions when accessing shared resources (like the clients map)
 
-## 🚀 Planned Features
+## Planned Features
 
 - Nicknames and user identification
 - Command support (`/help`, `/msg @user`, `/quit`)
@@ -55,5 +55,5 @@ go run .
 
 ```bash
 cd client
-go run main.go
+go run .
 ```
