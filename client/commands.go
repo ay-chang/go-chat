@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -18,8 +17,8 @@ func handleCommand(input string) bool {
 	switch command {
 	case "/help":
 		printHelp()
-	case "/msg":
-		messagePrivately(parts)
+	// case "/msg":
+	// 	messagePrivately(parts)
 	default:
 		fmt.Println("Unknown command:", command)
 	}
@@ -35,8 +34,8 @@ func printHelp() {
 	fmt.Println("  /msg @user <message>  Send a private message")
 }
 
-func messagePrivately(parts []string) {
-	recipient := parts[1]
-	message := strings.Join(parts[2:], " ")
-	fmt.Fprintf(os.Stdout, "The recipient is %s and the message is %s\n", recipient, message)
-}
+// func messagePrivately(parts []string) {
+// 	recipient := parts[1]
+// 	message := strings.Join(parts[2:], " ")
+// 	fmt.Fprintf(os.Stdout, "The recipient is %s and the message is %s\n", recipient, message)
+// }

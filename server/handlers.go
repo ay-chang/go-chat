@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"strings"
 )
 
 /** Listens for messages from a client and forwards to the broadcast channel. */
@@ -34,16 +35,37 @@ func handleClient(conn net.Conn) {
 	}
 
 	/**
-	 * Create a scanner that reads data from the connection conn. It
-	 * continuously reads the next line from the connection and returns
-	 * true if there's another line or message.
+	 * Create a scanner that reads data from the connection conn. It continuously reads
+	 * the next line from the connection and returns true if there's another line or
+	 * message. Also checks for certain commands such as /msg, otherwise broadcast the
+	 * message normally.
 	 */
 	for scanner.Scan() {
 		mu.Lock()
 		username := clients[conn]
 		mu.Unlock()
-		msg := fmt.Sprintf("[%s] %s", username, scanner.Text())
-		broadcast <- msg
+
+		msg := scanner.Text()
+		if strings.HasPrefix(msg, "/msg ") {
+			parts := strings.Fields(msg)
+			recipient := strings.TrimPrefix(parts[1], "@")
+			privateMsg := strings.Join(parts[2:], " ")
+
+			mu.Lock()
+			targetConn, ok := users[recipient]
+			mu.Unlock()
+
+			if ok {
+				sender := clients[conn]
+				fmt.Fprintf(targetConn, "[private] %s: %s\n", sender, privateMsg) // send private msg
+				fmt.Fprintf(conn, "[you → @%s] %s\n", recipient, privateMsg)      // echo back private msg
+			} else {
+				fmt.Fprintf(conn, "User %s not found.\n", recipient)
+			}
+
+		} else {
+			broadcast <- fmt.Sprintf("[%s] %s", username, msg) // normal broadcast
+		}
 	}
 }
 
