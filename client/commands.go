@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 	"strings"
 )
 
@@ -14,6 +15,10 @@ func handleCommand(input string, conn net.Conn) bool {
 	switch command {
 	case "/help":
 		printHelp()
+	case "/quit":
+		fmt.Println("Goodbye!")
+		conn.Close()
+		os.Exit(0)
 	default:
 		// Forward server-related commands
 		fmt.Fprintln(conn, input)
