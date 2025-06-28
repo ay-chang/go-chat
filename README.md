@@ -1,8 +1,8 @@
 # 🧵 Go-Terminal-Chat
 
-A simple terminal-based chat application written in Go — built as a learning project to explore **network programming**, **concurrency**, and **message broadcasting** using core Go features.
+A simple terminal-based chat application written in Go, built as a learning project to explore **network programming**, **concurrency**, and **message broadcasting** using core Go features.
 
-This is a basic but functional chat app that allows multiple clients to connect to a server, send messages, and receive messages from others in real time. Over time, I plan to add new features like nicknames, private messaging, command parsing, and more.
+This is a basic but functional chat app that allows multiple clients to connect to a server, send messages, and receive messages from others in real time. Over time, I plan to add new features like nicknames, authentication, chat history, and more.
 
 ## ✨ Features (Current)
 
@@ -10,7 +10,8 @@ This is a basic but functional chat app that allows multiple clients to connect 
 - Concurrent client handling with goroutines
 - Real-time message broadcasting using Go channels
 - Basic terminal client that can send and receive messages
-- Graceful client disconnection handling
+- Command support (`/help`, `/msg @user`, `/quit`)
+- Client disconnection handling
 
 ## Foundational coding techniques used:
 
@@ -36,7 +37,6 @@ This is a basic but functional chat app that allows multiple clients to connect 
 ## Planned Features
 
 - Nicknames and user identification
-- Command support (`/help`, `/msg @user`, `/quit`)
 - Colored terminal output per user
 - Chat history logging
 - Hosting on a public server
