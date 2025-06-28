@@ -2,14 +2,11 @@ package main
 
 import (
 	"fmt"
+	"net"
 	"strings"
 )
 
-func handleCommand(input string) bool {
-	if !strings.HasPrefix(input, "/") {
-		return false
-	}
-
+func handleCommand(input string, conn net.Conn) bool {
 	/** Split input into a parts by " " and set extract the command */
 	parts := strings.Fields(input)
 	command := parts[0]
@@ -17,10 +14,10 @@ func handleCommand(input string) bool {
 	switch command {
 	case "/help":
 		printHelp()
-	// case "/msg":
-	// 	messagePrivately(parts)
 	default:
-		fmt.Println("Unknown command:", command)
+		// Forward server-related commands
+		fmt.Fprintln(conn, input)
+		return true
 	}
 
 	return true
@@ -33,9 +30,3 @@ func printHelp() {
 	fmt.Println("  /name <username>      Change your nickname")
 	fmt.Println("  /msg @user <message>  Send a private message")
 }
-
-// func messagePrivately(parts []string) {
-// 	recipient := parts[1]
-// 	message := strings.Join(parts[2:], " ")
-// 	fmt.Fprintf(os.Stdout, "The recipient is %s and the message is %s\n", recipient, message)
-// }
