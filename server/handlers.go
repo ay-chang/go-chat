@@ -57,6 +57,7 @@ func handleClient(conn net.Conn) {
 
 			if ok {
 				sender := clients[conn]
+				fmt.Printf("Connection Address: %s", conn.RemoteAddr())
 				fmt.Fprintf(targetConn, "[private] %s: %s\n", sender, privateMsg) // send private msg
 				fmt.Fprintf(conn, "[you → @%s] %s\n", recipient, privateMsg)      // echo back private msg
 			} else {
