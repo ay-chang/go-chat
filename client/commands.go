@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func handleCommand(input string, conn net.Conn) bool {
+func handlClientSideCommand(input string, conn net.Conn) bool {
 	/** Split input into a parts by " " and set extract the command */
 	parts := strings.Fields(input)
 	command := parts[0]
@@ -19,8 +19,7 @@ func handleCommand(input string, conn net.Conn) bool {
 		fmt.Println("Goodbye!")
 		conn.Close()
 		os.Exit(0)
-	default:
-		// Forward server-related commands
+	default: // Forward server-related commands
 		fmt.Fprintln(conn, input)
 		return true
 	}

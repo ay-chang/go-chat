@@ -19,7 +19,7 @@ func handleUserInput(conn net.Conn) {
 		scanner.Scan()
 		text := scanner.Text()
 
-		if handleCommand(text, conn) {
+		if handlClientSideCommand(text, conn) {
 			continue
 		} else {
 			fmt.Fprintln(conn, text)

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"strings"
 )
 
 /** Listens for messages from a client and forwards to the broadcast channel. */
@@ -46,24 +45,8 @@ func handleClient(conn net.Conn) {
 		mu.Unlock()
 
 		msg := scanner.Text()
-		if strings.HasPrefix(msg, "/msg ") {
-			parts := strings.Fields(msg)
-			recipient := strings.TrimPrefix(parts[1], "@")
-			privateMsg := strings.Join(parts[2:], " ")
-
-			mu.Lock()
-			targetConn, ok := users[recipient]
-			mu.Unlock()
-
-			if ok {
-				sender := clients[conn]
-				fmt.Printf("Connection Address: %s", conn.RemoteAddr())
-				fmt.Fprintf(targetConn, "[private] %s: %s\n", sender, privateMsg) // send private msg
-				fmt.Fprintf(conn, "[you → @%s] %s\n", recipient, privateMsg)      // echo back private msg
-			} else {
-				fmt.Fprintf(conn, "User %s not found.\n", recipient)
-			}
-
+		if handleServerSideCommands(msg, conn, username) {
+			continue
 		} else {
 			broadcast <- fmt.Sprintf("[%s] %s", username, msg) // normal broadcast
 		}
