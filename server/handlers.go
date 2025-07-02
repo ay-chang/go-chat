@@ -6,10 +6,11 @@ import (
 	"net"
 )
 
-/** Listens for messages from a client and forwards to the broadcast channel. */
+/** Listens for messages from a single client and forwards to the broadcast channel. */
 func handleClient(conn net.Conn) {
 	var username string
 
+	/** Handle exiting program for client*/
 	defer func() {
 		mu.Lock()
 		delete(clients, conn)
@@ -20,8 +21,8 @@ func handleClient(conn net.Conn) {
 	}()
 
 	/**
-	 * First get the client username and add new client username to clients map and also
-	 * add the client to the user map
+	* First create a scanner and get the client username and add new client username to
+	* clients map and also add the client to the user map.
 	 */
 	scanner := bufio.NewScanner(conn)
 	if scanner.Scan() {
@@ -34,10 +35,9 @@ func handleClient(conn net.Conn) {
 	}
 
 	/**
-	 * Create a scanner that reads data from the connection conn. It continuously reads
-	 * the next line from the connection and returns true if there's another line or
-	 * message. Also checks for certain commands such as /msg, otherwise broadcast the
-	 * message normally.
+	 * Continuously scan the next line from the connection and returns true if there's
+	 * another line or message. Also checks for certain commands such as /msg, otherwise
+	 * broadcast the message normally.
 	 */
 	for scanner.Scan() {
 		mu.Lock()
@@ -47,9 +47,8 @@ func handleClient(conn net.Conn) {
 		msg := scanner.Text()
 		if handleServerSideCommands(msg, conn, username) {
 			continue
-		} else {
-			broadcast <- fmt.Sprintf("[%s] %s", username, msg) // normal broadcast
 		}
+		broadcast <- fmt.Sprintf("[%s] %s", username, msg) // normal broadcast
 	}
 }
 

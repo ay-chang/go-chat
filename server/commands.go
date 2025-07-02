@@ -21,15 +21,15 @@ func handleServerSideCommands(msg string, conn net.Conn, username string) bool {
 
 		if ok {
 			sender := clients[conn]
-			fmt.Printf("Connection Address: %s", conn.RemoteAddr())
 			fmt.Fprintf(targetConn, "[private] %s: %s\n", sender, privateMsg) // send private msg
 			fmt.Fprintf(conn, "[you → @%s] %s\n", recipient, privateMsg)      // echo back private msg
 		} else {
 			fmt.Fprintf(conn, "User %s not found.\n", recipient)
 		}
 	default: // Forward server-related commands
+		fmt.Printf("Forwarding message: %s\n", msg)
 		fmt.Fprintln(conn, msg)
-		return true
+		return false
 	}
 
 	return true
