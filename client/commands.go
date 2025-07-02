@@ -30,6 +30,7 @@ func handlClientSideCommand(input string, conn net.Conn) bool {
 func printHelp() {
 	fmt.Println("Available commands:")
 	fmt.Println("  /help                 Show this message")
+	fmt.Println("  /who                  Dipslay a list of all active users")
 	fmt.Println("  /quit                 Exit the chat")
 	fmt.Println("  /name <username>      Change your nickname")
 	fmt.Println("  /msg @user <message>  Send a private message")

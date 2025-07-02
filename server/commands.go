@@ -26,6 +26,11 @@ func handleServerSideCommands(msg string, conn net.Conn, username string) bool {
 		} else {
 			fmt.Fprintf(conn, "User %s not found.\n", recipient)
 		}
+	case "/who":
+		fmt.Fprintln(conn, "Here is a list of active users:")
+		for activeUser := range users {
+			fmt.Fprintf(conn, "  - %s\n", activeUser)
+		}
 	default: // Forward server-related commands
 		fmt.Printf("Forwarding message: %s\n", msg)
 		fmt.Fprintln(conn, msg)
