@@ -6,7 +6,8 @@ import (
 	"strings"
 )
 
-func handleServerSideCommands(msg string, conn net.Conn, username string) bool {
+/** Handle commands if detected, otherwise forward it to the broadcast channel */
+func handleServerSideCommands(msg string, conn net.Conn) bool {
 	parts := strings.Fields(msg)
 	command := parts[0]
 
@@ -28,11 +29,12 @@ func handleServerSideCommands(msg string, conn net.Conn, username string) bool {
 		}
 	case "/who":
 		fmt.Fprintln(conn, "Here is a list of active users:")
+		mu.Lock()
 		for activeUser := range users {
 			fmt.Fprintf(conn, "  - %s\n", activeUser)
 		}
+		mu.Unlock()
 	default: // Forward server-related commands
-		fmt.Printf("Forwarding message: %s\n", msg)
 		fmt.Fprintln(conn, msg)
 		return false
 	}

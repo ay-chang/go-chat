@@ -20,8 +20,7 @@ func handlClientSideCommand(input string, conn net.Conn) bool {
 		conn.Close()
 		os.Exit(0)
 	default: // Forward server-related commands
-		fmt.Fprintln(conn, input)
-		return true
+		return false
 	}
 
 	return true

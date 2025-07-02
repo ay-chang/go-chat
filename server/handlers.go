@@ -10,7 +10,7 @@ import (
 func handleClient(conn net.Conn) {
 	var username string
 
-	/** Handle exiting program for client*/
+	/** Handle exiting program for current client */
 	defer func() {
 		mu.Lock()
 		delete(clients, conn)
@@ -45,7 +45,7 @@ func handleClient(conn net.Conn) {
 		mu.Unlock()
 
 		msg := scanner.Text()
-		if handleServerSideCommands(msg, conn, username) {
+		if handleServerSideCommands(msg, conn) {
 			continue
 		}
 		broadcast <- fmt.Sprintf("[%s] %s", username, msg) // normal broadcast

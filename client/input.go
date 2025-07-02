@@ -19,11 +19,11 @@ func handleUserInput(conn net.Conn) {
 		scanner.Scan()
 		text := scanner.Text()
 
+		/** If input is command handle it otherwise forward to server */
 		if handlClientSideCommand(text, conn) {
 			continue
-		} else {
-			fmt.Fprintln(conn, text)
 		}
+		fmt.Fprintln(conn, text)
 
 		/** Clear the line that the user just typed */
 		fmt.Print("\033[1A")
